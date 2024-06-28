@@ -80,7 +80,7 @@
               ></button>
             </div>
             <div class="modal-body">
-              <form class="d-flex flex-column gap-3">
+              <form class="d-flex flex-column gap-3" novalidate>
                 <div>
                   <label for="title" class="form-label">Title</label>
                   <input
@@ -88,8 +88,11 @@
                     class="form-control"
                     id="title"
                     placeholder="E.g. The Stranger"
+                    minlength="3"
                     required
                   />
+                  <div class="valid-feedback">Looks good!</div>
+                  <div class="invalid-feedback">Please enter book title</div>
                 </div>
                 <div>
                   <label for="author" class="form-label">Author</label>
@@ -100,6 +103,8 @@
                     placeholder="E.g. Albert Camus"
                     required
                   />
+                  <div class="valid-feedback">Looks good!</div>
+                  <div class="invalid-feedback">Please enter author name</div>
                 </div>
                 <div>
                   <label for="num-of-pages" class="form-label"
@@ -109,9 +114,14 @@
                     type="number"
                     class="form-control"
                     id="num-of-pages"
+                    min="1"
                     placeholder="E.g. 208"
                     required
                   />
+                  <div class="valid-feedback">Looks good!</div>
+                  <div class="invalid-feedback">
+                    Please enter number of pages
+                  </div>
                 </div>
                 <div class="form-check form-switch">
                   <input
@@ -122,6 +132,11 @@
                   />
                   <label class="form-check-label" for="is-read"> Read </label>
                 </div>
+                <button
+                  type="submit"
+                  class="d-none"
+                  id="form-submit-btn"
+                ></button>
               </form>
             </div>
             <div class="modal-footer">
@@ -132,7 +147,9 @@
               >
                 Cancel
               </button>
-              <button type="button" class="btn btn-primary">Add</button>
+              <button type="button" class="btn btn-primary" id="add-button">
+                Add
+              </button>
             </div>
           </div>
         </div>
