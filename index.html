@@ -46,11 +46,98 @@
     <header>
       <nav class="navbar bg-body-tertiary border-bottom border-2">
         <div class="container-fluid">
-          <span class="navbar-brand mb-0 h1 fw-bold fs-3"> Library </span>
+          <span class="navbar-brand mb-0 h1 fw-bold fs-3">Library</span>
         </div>
       </nav>
     </header>
-    <main class="flex-grow-1"></main>
+    <main class="flex-grow-1 position-relative">
+      <button
+        type="button"
+        class="btn btn-primary position-absolute rounded-circle toggle-modal-button fs-3"
+        data-bs-toggle="modal"
+        data-bs-target="#book-form"
+      >
+        <i class="bi bi-plus-lg"></i>
+      </button>
+      <div
+        class="modal fade"
+        id="book-form"
+        tabindex="-1"
+        aria-labelledby="book-form"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5 fw-bold" id="modal-title">
+                Book details
+              </h1>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <form class="d-flex flex-column gap-3">
+                <div>
+                  <label for="title" class="form-label">Title</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="title"
+                    placeholder="E.g. The Stranger"
+                    required
+                  />
+                </div>
+                <div>
+                  <label for="author" class="form-label">Author</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="author"
+                    placeholder="E.g. Albert Camus"
+                    required
+                  />
+                </div>
+                <div>
+                  <label for="num-of-pages" class="form-label"
+                    >Number of pages</label
+                  >
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="num-of-pages"
+                    placeholder="E.g. 208"
+                    required
+                  />
+                </div>
+                <div class="form-check form-switch">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    role="switch"
+                    id="is-read"
+                  />
+                  <label class="form-check-label" for="is-read"> Read </label>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Cancel
+              </button>
+              <button type="button" class="btn btn-primary">Add</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
     <footer class="container text-center fw-medium text-secondary mt-auto">
       <p>
         &copy;
