@@ -50,20 +50,21 @@
         </div>
       </nav>
     </header>
-    <main class="flex-grow-1 position-relative">
+    <main class="flex-grow-1 position-relative px-5 py-4">
+      <div id="books-container"></div>
       <button
         type="button"
         class="btn btn-primary position-absolute rounded-circle toggle-modal-button fs-3"
         data-bs-toggle="modal"
-        data-bs-target="#book-form"
+        data-bs-target="#book-modal"
       >
         <i class="bi bi-plus-lg"></i>
       </button>
       <div
         class="modal fade"
-        id="book-form"
+        id="book-modal"
         tabindex="-1"
-        aria-labelledby="book-form"
+        aria-labelledby="book-modal"
         aria-hidden="true"
       >
         <div class="modal-dialog">
