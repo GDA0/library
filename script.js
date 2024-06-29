@@ -34,6 +34,7 @@ bookForm.addEventListener("submit", (event) => {
   const newBook = new Book(title, author, numOfPages, isRead);
 
   myLibrary.push(newBook);
+  displayBooks();
 
   const modal = bootstrap.Modal.getInstance(bookModal);
   modal.hide();
@@ -41,3 +42,57 @@ bookForm.addEventListener("submit", (event) => {
   bookForm.reset();
   bookForm.classList.remove("was-validated");
 });
+
+function displayBooks() {
+  booksContainer.innerHTML = "";
+
+  myLibrary.forEach((book, index) => {
+    let card = document.createElement("div");
+    card.classList.add("card", "mb-1");
+
+    let cardBody = document.createElement("div");
+    cardBody.classList.add("card-body");
+
+    let cardTitle = document.createElement("h5");
+    cardTitle.classList.add("card-title", "fw-bold");
+    cardTitle.textContent = book.title;
+    cardBody.appendChild(cardTitle);
+
+    let cardAuthor = document.createElement("p");
+    cardAuthor.classList.add("card-text", "mb-0");
+    cardAuthor.textContent = `Author: ${book.author}`;
+    cardBody.appendChild(cardAuthor);
+
+    let cardPages = document.createElement("p");
+    cardPages.classList.add("card-text", "mb-0");
+    cardPages.textContent = `Pages: ${book.numOfPages}`;
+    cardBody.appendChild(cardPages);
+
+    let cardReadStatus = document.createElement("p");
+    cardReadStatus.classList.add("card-text", "mb-0");
+    cardReadStatus.textContent = book.isRead ? "Read" : "Not Read";
+    cardBody.appendChild(cardReadStatus);
+
+    let toggleReadBtn = document.createElement("button");
+    toggleReadBtn.classList.add("btn", "btn-primary", "me-2");
+    toggleReadBtn.textContent = book.isRead ? "Mark as Unread" : "Mark as Read";
+    toggleReadBtn.addEventListener("click", () => {
+      book.isRead = !book.isRead;
+      displayBooks();
+    });
+    cardBody.appendChild(toggleReadBtn);
+
+    let deleteBtn = document.createElement("button");
+    deleteBtn.classList.add("btn", "btn-danger");
+    deleteBtn.textContent = "Delete";
+    deleteBtn.addEventListener("click", () => {
+      myLibrary.splice(index, 1);
+      displayBooks();
+    });
+    cardBody.appendChild(deleteBtn);
+
+    card.appendChild(cardBody);
+
+    booksContainer.appendChild(card);
+  });
+}
