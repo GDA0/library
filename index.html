@@ -50,11 +50,11 @@
         </div>
       </nav>
     </header>
-    <main class="flex-grow-1 position-relative px-5 py-4">
-      <div id="books-container"></div>
+    <main class="flex-grow-1 position-relative px-4 px-lg-5 py-4">
+      <div class="books-container" id="books-container"></div>
       <button
         type="button"
-        class="btn btn-primary position-absolute rounded-circle toggle-modal-button fs-3"
+        class="btn btn-primary position-absolute rounded-circle toggle-modal-button fs-3 shadow"
         data-bs-toggle="modal"
         data-bs-target="#book-modal"
       >
@@ -89,7 +89,7 @@
                     class="form-control"
                     id="title"
                     placeholder="E.g. The Stranger"
-                    minlength="3"
+                    minlength="1"
                     required
                   />
                   <div class="valid-feedback">Looks good!</div>

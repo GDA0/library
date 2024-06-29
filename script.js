@@ -16,39 +16,44 @@ class Book {
 
 addBtn.addEventListener("click", () => formSubmitBtn.click());
 
-bookForm.addEventListener("submit", (event) => {
-  event.preventDefault();
+bookForm.addEventListener(
+  "submit",
+  (event) => {
+    event.preventDefault();
 
-  if (!bookForm.checkValidity()) {
-    event.stopPropagation();
-    return;
-  }
+    if (!bookForm.checkValidity()) {
+      event.stopPropagation();
+    }
 
-  bookForm.classList.add("was-validated");
+    bookForm.classList.add("was-validated");
 
-  let title = bookForm.querySelector("#title").value;
-  let author = bookForm.querySelector("#author").value;
-  let numOfPages = bookForm.querySelector("#num-of-pages").value;
-  let isRead = bookForm.querySelector("#is-read").checked;
+    if (bookForm.checkValidity()) {
+      let title = bookForm.querySelector("#title").value;
+      let author = bookForm.querySelector("#author").value;
+      let numOfPages = bookForm.querySelector("#num-of-pages").value;
+      let isRead = bookForm.querySelector("#is-read").checked;
 
-  const newBook = new Book(title, author, numOfPages, isRead);
+      const newBook = new Book(title, author, numOfPages, isRead);
 
-  myLibrary.push(newBook);
-  displayBooks();
+      myLibrary.push(newBook);
+      displayBooks();
 
-  const modal = bootstrap.Modal.getInstance(bookModal);
-  modal.hide();
+      const modal = bootstrap.Modal.getInstance(bookModal);
+      modal.hide();
 
-  bookForm.reset();
-  bookForm.classList.remove("was-validated");
-});
+      bookForm.reset();
+      bookForm.classList.remove("was-validated");
+    }
+  },
+  false
+);
 
 function displayBooks() {
   booksContainer.innerHTML = "";
 
   myLibrary.forEach((book, index) => {
     let card = document.createElement("div");
-    card.classList.add("card", "mb-1");
+    card.classList.add("card");
 
     let cardBody = document.createElement("div");
     cardBody.classList.add("card-body");
@@ -69,7 +74,7 @@ function displayBooks() {
     cardBody.appendChild(cardPages);
 
     let cardReadStatus = document.createElement("p");
-    cardReadStatus.classList.add("card-text", "mb-0");
+    cardReadStatus.classList.add("card-text", "mb-2");
     cardReadStatus.textContent = book.isRead ? "Read" : "Not Read";
     cardBody.appendChild(cardReadStatus);
 
