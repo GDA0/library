@@ -29,13 +29,29 @@ class BookView {
   constructor() {
     this.bookModal = document.querySelector("#book-modal");
     this.bookForm = document.querySelector("form");
-    this.addBtn = document.querySelector("#add-button");
     this.formSubmitBtn = document.querySelector("#form-submit-btn");
     this.booksContainer = document.querySelector("#books-container");
+    this.closeModalBtns = document.querySelectorAll(".close-modal");
+
+    // Add event listener to focus on the first input field when the modal is shown
+    this.bookModal.addEventListener("shown.bs.modal", () => {
+      this.bookForm.querySelector("input").focus();
+    });
+
+    // Add event listeners to clear form when book addition is cancelled
+    this.closeModalBtns.forEach((closeModalBtn) => {
+      closeModalBtn.addEventListener("click", () => {
+        const form = closeModalBtn.closest(".modal").querySelector("form");
+
+        if (form) {
+          form.reset();
+          form.classList.remove("was-validated");
+        }
+      });
+    });
   }
 
   bindAddBook(handler) {
-    this.addBtn.addEventListener("click", () => this.formSubmitBtn.click());
     this.bookForm.addEventListener(
       "submit",
       (event) => {
@@ -45,7 +61,9 @@ class BookView {
           const author = this.bookForm.querySelector("#author").value;
           const numOfPages = this.bookForm.querySelector("#num-of-pages").value;
           const isRead = this.bookForm.querySelector("#is-read").checked;
+
           handler({ title, author, numOfPages, isRead });
+
           this.bookForm.reset();
           this.bookForm.classList.remove("was-validated");
         } else {
@@ -55,6 +73,13 @@ class BookView {
       },
       false
     );
+  }
+
+  hideModal() {
+    const modalInstance = bootstrap.Modal.getInstance(this.bookModal);
+    if (modalInstance) {
+      modalInstance.hide();
+    }
   }
 
   displayBooks(books, handlers) {
@@ -105,3 +130,44 @@ class BookView {
     });
   }
 }
+
+class BookController {
+  constructor(model, view) {
+    this.model = model;
+    this.view = view;
+
+    this.view.bindAddBook(this.handleAddBook.bind(this));
+    this.displayBooks();
+  }
+
+  handleAddBook(bookDetails) {
+    const book = new Book(
+      bookDetails.title,
+      bookDetails.author,
+      bookDetails.numOfPages,
+      bookDetails.isRead
+    );
+    this.model.addBook(book);
+    this.view.hideModal();
+    this.displayBooks();
+  }
+
+  handleToggleReadStatus(index) {
+    this.model.toggleReadStatus(index);
+    this.displayBooks();
+  }
+
+  handleDeleteBook(index) {
+    this.model.removeBook(index);
+    this.displayBooks();
+  }
+
+  displayBooks() {
+    this.view.displayBooks(this.model.books, {
+      toggleRead: this.handleToggleReadStatus.bind(this),
+      delete: this.handleDeleteBook.bind(this),
+    });
+  }
+}
+
+const app = new BookController(new Library(), new BookView());
